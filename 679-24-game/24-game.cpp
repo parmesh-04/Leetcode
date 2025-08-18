@@ -2,7 +2,7 @@ class Solution {
 public:
     bool solve(vector<double>& v){
         if(v.size()==1){
-             return abs(v[0]-24.0)<1e-6;
+             return abs(v[0]-24.0)<1e-9;
         }
 
         for(int i=0;i<v.size();i++){
