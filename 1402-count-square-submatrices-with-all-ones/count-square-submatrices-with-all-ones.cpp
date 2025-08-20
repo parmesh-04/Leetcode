@@ -1,30 +1,25 @@
 class Solution {
 public:
-    int solve(int r,int c,vector<vector<int>>& matrix, vector<vector<int>>& dp ){
-        if(r<0||c<0 || matrix[r][c]==0){
-            return 0;
-        }
-        if(dp[r][c]!=-1) return dp[r][c];
-
-        int a=solve(r-1,c,matrix,dp);
-        int b=solve(r-1,c-1,matrix,dp);
-        int d=solve(r,c-1,matrix,dp);
-        return dp[r][c]=1+min({a,b,d});
-       
-
-    }
-
     int countSquares(vector<vector<int>>& matrix) {
-        int m=matrix.size();
-        int n=matrix[0].size();
-       vector<vector<int>> dp(m,vector<int>(n,-1));
-      
-        long long ans=0;
-       for(int i=0;i<m;i++){
-        for(int j=0;j<n;j++){
-            ans+=solve(i,j,matrix,dp);
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+        int total_squares = 0;
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == 1) {
+                    if (i == 0 || j == 0) {
+                        // First row or column can only have 1x1 squares
+                        dp[i][j] = 1;
+                    } else {
+                        // The core DP recurrence relation
+                        dp[i][j] = 1 + min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]});
+                    }
+                }
+                total_squares += dp[i][j];
+            }
         }
-       }
-    return ans;
+        return total_squares;
     }
 };
