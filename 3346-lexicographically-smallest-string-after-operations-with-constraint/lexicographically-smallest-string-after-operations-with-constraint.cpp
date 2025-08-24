@@ -11,6 +11,7 @@ public:
             if(k>0){
                 s[i]=s[i]-k;
                 k=0;
+                break;
             }
         }
 
