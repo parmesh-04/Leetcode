@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+
+
+int cnt=0;
+unordered_map<long long,int> mp;
+
+    void solve(TreeNode* root,int tar, long long sum ){
+        if(!root) return;
+        sum+=root->val;
+        if(mp.count(sum-tar)){
+            cnt+=mp[sum-tar];
+        }
+        mp[sum]++;
+        solve(root->left,tar,sum);
+        solve(root->right,tar,sum);
+        mp[sum]--;
+    }
+
+    int pathSum(TreeNode* root, int targetSum) {
+       
+        mp[0]=1;
+        solve(root,targetSum,0);
+        return cnt;
+        
+    }
+};
